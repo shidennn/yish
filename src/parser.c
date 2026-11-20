@@ -26,7 +26,7 @@ int parse(char* input, ParsedCommand* cmd){
         return -1;
     }
 
-    char* token = strtok(input, " ");
+    char* token = strtok(input, " \t\n");
     while(token != NULL){
         cmd->args[cmd->argc] = malloc(strlen(token) + 1);
         if (cmd->args[cmd->argc] == NULL){
@@ -36,7 +36,7 @@ int parse(char* input, ParsedCommand* cmd){
         }
         strcpy(cmd->args[cmd->argc], token);
         cmd->argc++;
-        token = strtok(NULL, " ");
+        token = strtok(NULL, " \t\n");
     }
     cmd->args[cmd->argc] = NULL;
     return 0;
