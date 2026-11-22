@@ -26,8 +26,9 @@ int executeBuiltinCommand(ParsedCommand* cmd) {
     }
 
     if (strcmp(cmd->args[0], "cd") == 0) {
-        if (cmd->argc < 2) {
+        if (cmd->argc == 1) {
             const char* homePath = getenv("HOME");
+
             if (homePath == NULL) {
                 fprintf(stderr, "Error: HOME environment variable not set.\n");
                 return -1;
@@ -37,13 +38,17 @@ int executeBuiltinCommand(ParsedCommand* cmd) {
                 return -1;
             }
         }
-        else {
+        else if (cmd->argc == 2) {
             if (chdir(cmd->args[1]) != 0) {
                 perror("cd");
                 return -1;
             }
             
         }
+        else {
+        fprintf(stderr, "Usage: cd [directory]\n");
+        return -1;
+    }
         return 0; // Success
     }
 
