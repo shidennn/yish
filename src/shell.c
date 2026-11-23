@@ -1,6 +1,8 @@
+#define _POSIX_C_SOURCE 200809L
 #include <stdio.h>
 #include <stdlib.h>
 #include <stddef.h>
+#include <sys/types.h>
 #include "../include/builtins.h"
 #include "../include/parser.h"
 #include "../include/shell.h"
@@ -32,6 +34,8 @@ void startShell() {
                 freeParsedCommand(&cmd);
                 continue;
             }
+            //fprintf(stderr, "Command: %s\n", cmd.args[0]);
+            //fprintf(stderr, "Is builtin: %d\n", isBuiltinCommand(&cmd));
             if (isBuiltinCommand(&cmd)) {
                 int result = executeBuiltinCommand(&cmd);
                 if (result == 1) {
