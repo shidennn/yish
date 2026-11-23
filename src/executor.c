@@ -20,7 +20,10 @@ int executeCommand(ParsedCommand* cmd) {
     else if (pid == 0) {
         // child process
         execvp(cmd->args[0], cmd->args);
-        // If execvp returns, it must have failed
+        // if execvp is successful, it will erase the child process memory and replace it with the new program, so it will not return to this code.
+        // for example if you run ls command it will replace that memory with /ls code and ls starts its own main function.
+        // when ls command finishes its job it will exit and not return to this code. because this code is not in RAM.
+        // if execvp returns, it means it failed. and comes back to this code and prints error.
         perror("execvp");
         exit(EXIT_FAILURE);
 
