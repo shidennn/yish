@@ -5,5 +5,4 @@
 int isBuiltinCommand(ParsedCommand* cmd);
 int executeBuiltinCommand(ParsedCommand* cmd);
 
-
 #endif
