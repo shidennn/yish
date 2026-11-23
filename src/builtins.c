@@ -9,7 +9,7 @@ int isBuiltinCommand(ParsedCommand* cmd) {
         return 0; // Not a built-in command
     }
 
-    const char* builtins[] = {"cd", "exit", NULL};
+    const char* builtins[] = {"cd", "exit", "help", NULL};
     for (int i = 0; builtins[i] != NULL; i++) {
         if (strcmp(cmd->args[0], builtins[i]) == 0) {
             return 1; // It's a built-in command
@@ -61,7 +61,19 @@ int executeBuiltinCommand(ParsedCommand* cmd) {
             return -1;
         }
     }
-    
+    if (strcmp(cmd->args[0], "help") == 0) {
+        if (cmd->argc == 1) {
+            printf("Available built-in commands:\n");
+            printf("  cd     - Change the current directory\n");
+            printf("  exit   - Exit the shell\n");
+            printf("  help   - Display this help message\n");
+            return 0; // Success
+        }
+        else {
+            fprintf(stderr, "Error: 'help' command does not take any arguments.\n");
+            return -1;
+        }
+    }
 
     fprintf(stderr, "Error: Unknown built-in command '%s'\n", cmd->args[0]);
     return -1; // Unknown built-in command
